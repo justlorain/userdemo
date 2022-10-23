@@ -4,6 +4,9 @@ package user
 
 import (
 	"context"
+	"github.com/hertz-contrib/sessions"
+	"strconv"
+	"userdemo/biz/dal"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	user "userdemo/biz/model/user"
@@ -22,7 +25,26 @@ func Register(ctx context.Context, c *app.RequestContext) {
 
 	resp := new(user.RegisterResponse)
 
-	c.JSON(200, resp)
+	username := c.PostForm("username")
+	password := c.PostForm("password")
+
+	if dal.CheckUsername(username) {
+		dal.CreateUser(username, password)
+
+		resp.BaseResp = &user.BaseResp{
+			StatusCode: 0,
+			StatusMsg:  "register success",
+		}
+
+		c.JSON(200, resp.BaseResp)
+		return
+	}
+
+	resp.BaseResp = &user.BaseResp{
+		StatusCode: 1,
+		StatusMsg:  "register failed",
+	}
+	c.JSON(400, resp.BaseResp)
 }
 
 // Login .
@@ -38,7 +60,37 @@ func Login(ctx context.Context, c *app.RequestContext) {
 
 	resp := new(user.LoginResponse)
 
-	c.JSON(200, resp)
+	username := c.PostForm("username")
+	password := c.PostForm("password")
+
+	if dal.CheckPassword(username, password) {
+		session := sessions.Default(c)
+		var count int
+		cnt := session.Get("count")
+		if cnt == nil {
+			count = 0
+			dal.SetFrequency(username, count)
+		} else {
+			count = cnt.(int)
+			count++
+			dal.SetFrequency(username, count)
+		}
+		session.Set("count", count)
+		_ = session.Save()
+
+		resp.BaseResp = &user.BaseResp{
+			StatusCode: 0,
+			StatusMsg:  "login success",
+		}
+		c.JSON(200, resp.BaseResp)
+		return
+	}
+
+	resp.BaseResp = &user.BaseResp{
+		StatusCode: 1,
+		StatusMsg:  "login failed",
+	}
+	c.JSON(400, resp.BaseResp)
 }
 
 // Info .
@@ -53,6 +105,16 @@ func Info(ctx context.Context, c *app.RequestContext) {
 	}
 
 	resp := new(user.InfoResponse)
+
+	username := c.Param("username")
+
+	frequency := dal.GetFrequency(username)
+
+	resp.BaseResp = &user.BaseResp{
+		StatusCode: 0,
+		StatusMsg:  "info success",
+		Data:       strconv.Itoa(frequency),
+	}
 
 	c.JSON(200, resp)
 }

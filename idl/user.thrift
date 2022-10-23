@@ -33,7 +33,7 @@ struct InfoResponse {
 }
 
 service UserService {
-    RegisterResponse Register(1: RegisterRequest req) (api.post="/user/register/");
-    LoginResponse Login(1: LoginRequest req) (api.post="/user/login/");
+    RegisterResponse Register(1: RegisterRequest req) (api.post="/user/register");
+    LoginResponse Login(1: LoginRequest req) (api.post="/user/login");
     InfoResponse Info(1: InfoRequest req) (api.get="/user/:username");
 }

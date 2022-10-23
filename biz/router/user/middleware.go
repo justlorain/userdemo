@@ -4,6 +4,8 @@ package User
 
 import (
 	"github.com/cloudwego/hertz/pkg/app"
+	"github.com/hertz-contrib/sessions"
+	"github.com/hertz-contrib/sessions/cookie"
 )
 
 func rootMw() []app.HandlerFunc {
@@ -23,17 +25,9 @@ func _infoMw() []app.HandlerFunc {
 
 func _loginMw() []app.HandlerFunc {
 	// your code...
-	return nil
-}
-
-func _loginMw() []app.HandlerFunc {
-	// your code...
-	return nil
-}
-
-func _registerMw() []app.HandlerFunc {
-	// your code...
-	return nil
+	return []app.HandlerFunc{
+		sessions.Sessions("usersession", cookie.NewStore([]byte("secret"))),
+	}
 }
 
 func _registerMw() []app.HandlerFunc {
