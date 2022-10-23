@@ -116,5 +116,5 @@ func Info(ctx context.Context, c *app.RequestContext) {
 		Data:       strconv.Itoa(frequency),
 	}
 
-	c.JSON(200, resp)
+	c.JSON(200, resp.BaseResp)
 }
