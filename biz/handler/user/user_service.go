@@ -66,7 +66,7 @@ func Login(ctx context.Context, c *app.RequestContext) {
 	if dal.CheckPassword(username, password) {
 		session := sessions.Default(c)
 		var count int
-		cnt := session.Get("count")
+		cnt := session.Get(username)
 		if cnt == nil {
 			count = 0
 			dal.SetFrequency(username, count)
@@ -75,7 +75,7 @@ func Login(ctx context.Context, c *app.RequestContext) {
 			count++
 			dal.SetFrequency(username, count)
 		}
-		session.Set("count", count)
+		session.Set(username, count)
 		_ = session.Save()
 
 		resp.BaseResp = &user.BaseResp{
