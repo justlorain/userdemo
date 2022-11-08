@@ -238,8 +238,8 @@ func (p *BaseResp) String() string {
 }
 
 type RegisterRequest struct {
-	Username string `thrift:"Username,1" json:"Username" form:"Username" json:"username" query:"Username"`
-	Password string `thrift:"Password,2" json:"Password" form:"Password" json:"password" query:"Password"`
+	Username string `thrift:"Username,1" json:"Username" form:"Username" query:"Username"`
+	Password string `thrift:"Password,2" json:"Password" form:"Password" query:"Password"`
 }
 
 func NewRegisterRequest() *RegisterRequest {
@@ -566,8 +566,8 @@ func (p *RegisterResponse) String() string {
 }
 
 type LoginRequest struct {
-	Username string `thrift:"Username,1" json:"Username" form:"Username" json:"username" query:"Username"`
-	Password string `thrift:"Password,2" json:"Password" form:"Password" json:"password" query:"Password"`
+	Username string `thrift:"Username,1" json:"Username" form:"Username" query:"Username"`
+	Password string `thrift:"Password,2" json:"Password" form:"Password" query:"Password"`
 }
 
 func NewLoginRequest() *LoginRequest {
@@ -894,7 +894,7 @@ func (p *LoginResponse) String() string {
 }
 
 type InfoRequest struct {
-	Username string `thrift:"Username,1" json:"Username" form:"Username" path:"username" query:"Username"`
+	Username string `thrift:"Username,1" json:"Username" form:"Username" query:"Username"`
 }
 
 func NewInfoRequest() *InfoRequest {

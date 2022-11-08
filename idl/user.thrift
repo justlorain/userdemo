@@ -7,8 +7,8 @@ struct BaseResp {
 }
 
 struct RegisterRequest {
-    1: string Username (api.body="username");
-    2: string Password (api.body="password");
+    1: string Username;
+    2: string Password;
 }
 
 struct RegisterResponse {
@@ -16,8 +16,8 @@ struct RegisterResponse {
 }
 
 struct LoginRequest {
-    1: string Username (api.body="username");
-    2: string Password (api.body="password");
+    1: string Username;
+    2: string Password;
 }
 
 struct LoginResponse {
@@ -25,7 +25,7 @@ struct LoginResponse {
 }
 
 struct InfoRequest {
-    1: string Username (api.path="username");
+    1: string Username;
 }
 
 struct InfoResponse {
