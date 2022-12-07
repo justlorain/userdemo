@@ -1,5 +1,7 @@
 # userdemo
 
-A simple demo using Hertz.
+> English | [中文](README_ZH.md)
 
-Refer to [here](https://dev.to/justlorain/high-performance-go-http-framework-tasting-25li) for more information.
+A simple demo using Hertz
+
+Refer to [here](https://dev.to/justlorain/high-performance-go-http-framework-tasting-25li) for more information
